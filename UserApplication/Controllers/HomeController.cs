@@ -8,6 +8,7 @@ using System.Net;
 using Newtonsoft.Json;
 using System.IO;
 using System.Web.Security;
+using Newtonsoft.Json.Linq;
 using log4net;
 
 namespace UserApplication.Controllers
@@ -28,31 +29,15 @@ namespace UserApplication.Controllers
         {
             try
             {
-                string URL = "http://localhost:51091/AccountService.svc/Register";
-                HttpWebRequest Request = (HttpWebRequest)WebRequest.Create(URL);
-                Request.Method = "POST";
-                var RequestData = new { accountData = model };
-                string ResponseData = string.Empty;
-                string x = JsonConvert.SerializeObject(RequestData);
-                using (StreamWriter Writer = new StreamWriter(Request.GetRequestStream()))
+                var accountData = model ;
+                var Data = JsonConvert.DeserializeObject(Utilities.HttpRequest.GetHttpRequest("http://localhost:51091/AccountService.svc/Register", "POST", JsonConvert.SerializeObject(accountData))) as JToken;
+                string ResponseData = JsonConvert.DeserializeObject<string>(Data["RegisterResult"].ToString());
+                if (ResponseData.Equals("Success"))
                 {
-                    Writer.Write(JsonConvert.SerializeObject(RequestData));
+                    return RedirectToAction("Login", "Home");
                 }
-                using (HttpWebResponse Response = (HttpWebResponse)Request.GetResponse())
-                {
-                    using (Stream DataStream = Response.GetResponseStream())
-                    {
-                        using (StreamReader Reader = new StreamReader(DataStream))
-                        {
-                            ResponseData = JsonConvert.DeserializeObject<string>(Reader.ReadToEnd());
-                            if (ResponseData.Equals("Success"))
-                            {
-                                RedirectToAction("Login", "Home");
-                            }
-                        }
-                    }
-                }
-                return View();
+                else
+                    return View();
             }
             catch (Exception ex)
             {
@@ -73,25 +58,11 @@ namespace UserApplication.Controllers
         {
             try
             {
-                string URL = "http://localhost:51091/AccountService.svc/Login";
-                HttpWebRequest Request = (HttpWebRequest)WebRequest.Create(URL);
-                Request.Method = "POST";
-                var RequestData = new { loginData = model };
-
+                var loginData = model;
+                var Data=JsonConvert.DeserializeObject(Utilities.HttpRequest.GetHttpRequest("http://localhost:51091/AccountService.svc/Login","POST",JsonConvert.SerializeObject(loginData))) as JToken;
+                RegisterModel AccountData=JsonConvert.DeserializeObject<RegisterModel>(Data["LoginResult"].ToString());
                 
-                using (StreamWriter Writer = new StreamWriter(Request.GetRequestStream()))
-                {
-                    Writer.Write(JsonConvert.SerializeObject(RequestData));
-                }
-                using (HttpWebResponse Response = (HttpWebResponse)Request.GetResponse())
-                {
-                    using (Stream DataStream = Response.GetResponseStream())
-                    {
-                        using (StreamReader Reader = new StreamReader(DataStream))
-                        {
-                            RegisterModel AccountData = JsonConvert.DeserializeObject<RegisterModel>(Reader.ReadToEnd());
-
-                            if (AccountData != null)
+                if (AccountData != null)
                             {
 
                                 FormsAuthenticationTicket Ticket = new FormsAuthenticationTicket(
@@ -114,9 +85,6 @@ namespace UserApplication.Controllers
                             }
                             else
                                 return View();
-                        }
-                    }
-                }
             }
             catch (Exception ex)
             {

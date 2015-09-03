@@ -74,8 +74,8 @@
             </table>
     <% } %>
     
-    <%--<div>
-        <%: Html.ActionLink("Back to List", "Index") %>
-    </div>--%>
+    <div>
+        <%: Html.ActionLink("Old User", "Login","Home") %>
+    </div>
 </body>
 </html>

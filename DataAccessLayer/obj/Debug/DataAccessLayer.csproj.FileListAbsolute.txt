@@ -6,3 +6,4 @@ C:\Users\Nitish Kumar\Documents\Visual Studio 2010\Projects\UserApplicationProje
 C:\Users\Nitish Kumar\Documents\Visual Studio 2010\Projects\UserApplicationProject\DataAccessLayer\bin\Debug\Newtonsoft.Json.dll
 C:\Users\Nitish Kumar\Documents\Visual Studio 2010\Projects\UserApplicationProject\DataAccessLayer\bin\Debug\log4net.xml
 C:\Users\Nitish Kumar\Documents\Visual Studio 2010\Projects\UserApplicationProject\DataAccessLayer\bin\Debug\Newtonsoft.Json.xml
+C:\Users\Nitish Kumar\Documents\Visual Studio 2010\Projects\UserApplicationProject\DataAccessLayer\obj\Debug\DataAccessLayer.csprojResolveAssemblyReference.cache

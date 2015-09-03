@@ -7,10 +7,10 @@ using System.ServiceModel.Web;
 using System.Text;
 using log4net;
 using BusinessLayer;
+using DataObject;
 
 namespace RESTfulService
 {
-    // NOTE: You can use the "Rename" command on the "Refactor" menu to change the class name "UserService" in code, svc and config file together.
     public class UserService : IUserService
     {
 
@@ -18,7 +18,7 @@ namespace RESTfulService
 
 
 
-        public string AddUser(DataObject.UserDataObject userData)
+        public string AddUser(UserDataObject userData)
         {
             try
             {
@@ -27,23 +27,32 @@ namespace RESTfulService
             }
             catch (Exception ex)
             {
-                throw ex;
+                MyCustomErrorDetail Error = new MyCustomErrorDetail("Error in Adding User", ex.Message);
+                throw new WebFaultException<MyCustomErrorDetail>(Error, System.Net.HttpStatusCode.InternalServerError);
             }
         }
 
-        public DataObject.UserDataObject RetrieveUser(string userId)
+        public UserDataObject RetrieveUser(string userId)
         {
             try
             {
-                return BusinessLayer.Users.RetrieveUser(userId);
+                UserDataObject UserData=BusinessLayer.Users.RetrieveUser(userId);
+                if (string.IsNullOrEmpty(UserData.AutoId))
+                {
+                    MyCustomErrorDetail Error = new MyCustomErrorDetail("No user found", "No User with such id was in the database");
+                    throw new WebFaultException<MyCustomErrorDetail>(Error, System.Net.HttpStatusCode.NotFound);
+                }
+                else
+                    return UserData;
             }
             catch (Exception ex)
             {
-                throw ex;
+                MyCustomErrorDetail Error = new MyCustomErrorDetail("Unexpected Error caused by " + ex.Source, ex.Message);
+                throw new WebFaultException<MyCustomErrorDetail>(Error, System.Net.HttpStatusCode.InternalServerError);
             }
         }
 
-        public string UpdateUser(DataObject.UserDataObject userData)
+        public string UpdateUser(UserDataObject userData)
         {
             try
             {
@@ -52,11 +61,12 @@ namespace RESTfulService
             }
             catch (Exception ex)
             {
-                throw ex;
+                MyCustomErrorDetail Error = new MyCustomErrorDetail("Error in Updating User", ex.Message);
+                throw new WebFaultException<MyCustomErrorDetail>(Error, System.Net.HttpStatusCode.InternalServerError);
             }
         }
 
-        public List<DataObject.UserDataObject> RetrieveAllUsers()
+        public List<UserDataObject> RetrieveAllUsers()
         {
             try
             {
@@ -64,7 +74,8 @@ namespace RESTfulService
             }
             catch (Exception ex)
             {
-                throw ex;
+                MyCustomErrorDetail Error = new MyCustomErrorDetail("Unexpected Error caused by " + ex.Source, ex.Message);
+                throw new WebFaultException<MyCustomErrorDetail>(Error, System.Net.HttpStatusCode.InternalServerError);
             }
         }
 
@@ -77,7 +88,8 @@ namespace RESTfulService
             }
             catch (Exception ex)
             {
-                throw ex;
+                MyCustomErrorDetail Error = new MyCustomErrorDetail("Error in Updating User", ex.Message);
+                throw new WebFaultException<MyCustomErrorDetail>(Error, System.Net.HttpStatusCode.InternalServerError);
             }
         }
     }

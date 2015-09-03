@@ -29,9 +29,26 @@ namespace RESTfulService
                     Method = "POST",
                     RequestFormat = WebMessageFormat.Json,
                     ResponseFormat = WebMessageFormat.Json,
+                    BodyStyle=WebMessageBodyStyle.WrappedResponse,
                     UriTemplate = "/Login"
                    )]
 
         DataObject.RegisterDataObject Login(DataObject.LoginDataObject loginData);
+    }
+
+    [DataContract]
+    public class MyCustomErrorDetail
+    {
+        public MyCustomErrorDetail(string errorInfo, string errorDetails)
+        {
+            ErrorInfo = errorInfo;
+            ErrorDetails = errorDetails;
+        }
+
+        [DataMember]
+        public string ErrorInfo { get; private set; }
+
+        [DataMember]
+        public string ErrorDetails { get; private set; }
     }
 }

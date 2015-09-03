@@ -30,3 +30,5 @@ c:\users\nitish kumar\documents\visual studio 2010\Projects\UserApplicationProje
 C:\Users\Nitish Kumar\Documents\Visual Studio 2010\Projects\UserApplicationProject\UserApplication\obj\Debug\UserApplication.csprojResolveAssemblyReference.cache
 C:\Users\Nitish Kumar\Documents\Visual Studio 2010\Projects\UserApplicationProject\UserApplication\bin\log4net.dll
 C:\Users\Nitish Kumar\Documents\Visual Studio 2010\Projects\UserApplicationProject\UserApplication\bin\log4net.xml
+C:\Users\Nitish Kumar\Documents\Visual Studio 2010\Projects\UserApplicationProject\UserApplication\bin\Utilities.dll
+C:\Users\Nitish Kumar\Documents\Visual Studio 2010\Projects\UserApplicationProject\UserApplication\bin\Utilities.pdb

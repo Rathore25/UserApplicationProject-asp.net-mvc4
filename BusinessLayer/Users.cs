@@ -9,28 +9,9 @@ namespace BusinessLayer
 {
     public class Users
     {
-        private static readonly ILog _log = LogManager.GetLogger(typeof(Users).Name);
+        private static readonly ILog _log = LogManager.GetLogger(typeof(Users).Name);        
 
-        #region AllUser
-        public static List<DataObject.UserDataObject> RetrieveAllUser()
-        {
-            _log.Debug("BusinessLayer.RetrieveAllUser Entered");
-            try
-            {
-                return DataAccessLayer.Users.AllUser();
-            }
-            catch (Exception exception)
-            {
-                _log.Error("Error in RetrieveAllUser :" + exception);
-                throw exception;
-            }
-            finally
-            {
-                _log.Debug("BusinessLayer.RetrieveAllUser Exited");
-            }
-        } 
-        #endregion
-
+        #region Create
         public static void CreateUser(DataObject.UserDataObject UserData)
         {
             _log.Debug("BusinessLayer.CreateUser Entered");
@@ -48,8 +29,30 @@ namespace BusinessLayer
             {
                 _log.Debug("BusinessLayer.CreateUser Exited");
             }
-        }
+        } 
+        #endregion
 
+        #region Retrieve
+        public static List<DataObject.UserDataObject> RetrieveAllUser()
+        {
+            _log.Debug("BusinessLayer.RetrieveAllUser Entered");
+            try
+            {
+                return DataAccessLayer.Users.AllUser();
+            }
+            catch (Exception exception)
+            {
+                _log.Error("Error in RetrieveAllUser :" + exception);
+                throw exception;
+            }
+            finally
+            {
+                _log.Debug("BusinessLayer.RetrieveAllUser Exited");
+            }
+        }
+        #endregion
+        
+        #region Update
         public static DataObject.UserDataObject RetrieveUser(string uid)
         {
             _log.Debug("BusinessLayer.RetrieveUser entered");
@@ -84,8 +87,10 @@ namespace BusinessLayer
             {
                 _log.Debug("BusinessLayer.EditUser Exited");
             }
-        }
+        } 
+        #endregion
 
+        #region Delete
         public static void DeleteUser(string uid)
         {
             _log.Debug("BusinessLayer.DeleteUser entered");
@@ -103,6 +108,8 @@ namespace BusinessLayer
             {
                 _log.Debug("BusinessLayer.DeleteUser Exited");
             }
-        }
+        } 
+        #endregion
+
     }
 }

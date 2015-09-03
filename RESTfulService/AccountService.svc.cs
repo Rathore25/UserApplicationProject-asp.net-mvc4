@@ -7,7 +7,7 @@ using System.Text;
 using BusinessLayer;
 using DataAccessLayer;
 using System.ServiceModel.Web;
-
+using DataObject;
 namespace RESTfulService
 {
     // NOTE: You can use the "Rename" command on the "Refactor" menu to change the class name "AccountService" in code, svc and config file together.
@@ -22,7 +22,8 @@ namespace RESTfulService
             }
             catch (Exception ex)
             {
-                throw ex;
+                MyCustomErrorDetail Error = new MyCustomErrorDetail("Error in Registering",ex.Message);
+                throw new WebFaultException<MyCustomErrorDetail>(Error, System.Net.HttpStatusCode.InternalServerError);
             }
         }
 
@@ -31,14 +32,18 @@ namespace RESTfulService
             try
             {
                 DataObject.RegisterDataObject Data= BusinessLayer.Accounts.Validate(loginData);
-                if (string.IsNullOrEmpty(Data.UserName))
-                    return null;
+                if (string.IsNullOrEmpty(Data.Guid))
+                {
+                    MyCustomErrorDetail Error = new MyCustomErrorDetail("Error in Logging in", "Wrong Username or password");
+                    throw new WebFaultException<MyCustomErrorDetail>(Error, System.Net.HttpStatusCode.NotFound);
+                }
                 else
                     return Data;
             }
             catch (Exception ex)
             {
-                throw ex;
+                MyCustomErrorDetail Error = new MyCustomErrorDetail("Unexpected Error caused by "+ex.Source, ex.Message);
+                throw new WebFaultException<MyCustomErrorDetail>(Error, System.Net.HttpStatusCode.InternalServerError);
             }
         }
     }
