@@ -15,6 +15,7 @@ namespace UserApplication.Controllers
     [Authorize]
     public class UserController : Controller
     {
+        private static string url = System.Configuration.ConfigurationManager.AppSettings["LocalHost"];
         private static readonly ILog _log = LogManager.GetLogger(typeof(UserController));
 
         #region Create
@@ -49,7 +50,7 @@ namespace UserApplication.Controllers
                 try
                 {
                     string Result = string.Empty;
-                    var Data =JsonConvert.DeserializeObject(Utilities.HttpRequest.GetHttpRequest("http://localhost:51091/UserService.svc/Add", "POST", JsonConvert.SerializeObject(UserData, DateFormat))) as JToken;
+                    var Data =JsonConvert.DeserializeObject(Utilities.HttpRequest.GetHttpRequest(url+"UserService.svc/Add", "POST", JsonConvert.SerializeObject(UserData, DateFormat))) as JToken;
                     if (Data != null)
                     {
                         Result = Data["AddUserResult"].ToString();
@@ -77,7 +78,7 @@ namespace UserApplication.Controllers
                 List<UserModel> UserData = null ;
                 try
                 {
-                    var UserDataResponse = JsonConvert.DeserializeObject(Utilities.HttpRequest.GetHttpRequest("http://localhost:51091/UserService.svc/Users", "GET", string.Empty)) as JToken;
+                    var UserDataResponse = JsonConvert.DeserializeObject(Utilities.HttpRequest.GetHttpRequest(url + "UserService.svc/Users", "GET", string.Empty)) as JToken;
                     if (UserDataResponse!=null)
                     {
                         UserData = JsonConvert.DeserializeObject<List<UserModel>>(UserDataResponse["RetrieveAllUsersResult"].ToString()); 
@@ -86,7 +87,7 @@ namespace UserApplication.Controllers
                 catch (Exception ex)
                 {
                     _log.Error("Exception in Index :" + ex);
-                    throw ex;
+                    return RedirectToAction("ErrorPage", "Home", new { ex = ex.Message });
                 }
                 finally
                 {
@@ -119,7 +120,7 @@ namespace UserApplication.Controllers
             catch (Exception ex)
             {
                 _log.Error("Error in Populating the Edit page with previous data : " + ex);
-                throw ex;
+                return RedirectToAction("ErrorPage", "Home", new { ex = ex.Message });
             }
             finally
             {
@@ -152,7 +153,7 @@ namespace UserApplication.Controllers
                     UserData.PhoneNumber = (model.PhoneNumber ?? string.Empty);
                     UserData.EmailId = (model.EmailId ?? string.Empty);
                     string Result=string.Empty;
-                    var Data =JsonConvert.DeserializeObject(Utilities.HttpRequest.GetHttpRequest("http://localhost:51091/UserService.svc/Update","POST",JsonConvert.SerializeObject(UserData, DateFormat))) as JToken;
+                    var Data = JsonConvert.DeserializeObject(Utilities.HttpRequest.GetHttpRequest(url + "UserService.svc/Update", "POST", JsonConvert.SerializeObject(UserData, DateFormat))) as JToken;
                     if (Data != null)
                     {
                          Result = Data["UpdateUserResult"].ToString();
@@ -167,7 +168,7 @@ namespace UserApplication.Controllers
             catch (Exception ex)
             {
                 _log.Error("Error in Updating the table : " + ex);
-                throw ex;
+                return RedirectToAction("ErrorPage", "Home", new { ex = ex.Message });
             }
             finally
             {
@@ -185,7 +186,7 @@ namespace UserApplication.Controllers
             try
             {
                 string Result=string.Empty;
-                var Data = JsonConvert.DeserializeObject(Utilities.HttpRequest.GetHttpRequest("http://localhost:51091/UserService.svc/Delete", "POST", JsonConvert.SerializeObject(uid))) as JToken;
+                var Data = JsonConvert.DeserializeObject(Utilities.HttpRequest.GetHttpRequest(url + "UserService.svc/Delete", "POST", JsonConvert.SerializeObject(uid))) as JToken;
                 if (Data != null)
                 {
                     Result = Data["DeleteUserResult"].ToString();
@@ -194,7 +195,7 @@ namespace UserApplication.Controllers
             }
             catch (Exception ex)
             {
-                throw ex;
+                return RedirectToAction("ErrorPage", "Home", new { ex = ex.Message });
             }
             finally
             {

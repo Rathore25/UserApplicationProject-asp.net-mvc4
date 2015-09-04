@@ -4,3 +4,4 @@ c:\users\nitish kumar\documents\visual studio 2010\Projects\UserApplicationProje
 c:\users\nitish kumar\documents\visual studio 2010\Projects\UserApplicationProject\Utilities\obj\Debug\Utilities.pdb
 C:\Users\Nitish Kumar\Documents\Visual Studio 2010\Projects\UserApplicationProject\Utilities\bin\Debug\Newtonsoft.Json.dll
 C:\Users\Nitish Kumar\Documents\Visual Studio 2010\Projects\UserApplicationProject\Utilities\bin\Debug\Newtonsoft.Json.xml
+C:\Users\Nitish Kumar\Documents\Visual Studio 2010\Projects\UserApplicationProject\Utilities\obj\Debug\Utilities.csprojResolveAssemblyReference.cache

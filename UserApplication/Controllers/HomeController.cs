@@ -16,7 +16,7 @@ namespace UserApplication.Controllers
     public class HomeController : Controller
     {
         private static readonly ILog _log = LogManager.GetLogger(typeof(HomeController).Name);
-
+        private static string url = System.Configuration.ConfigurationManager.AppSettings["LocalHost"];
         #region Register
         [AllowAnonymous]
         public ActionResult Register()
@@ -30,7 +30,7 @@ namespace UserApplication.Controllers
             try
             {
                 var accountData = model ;
-                var Data = JsonConvert.DeserializeObject(Utilities.HttpRequest.GetHttpRequest("http://localhost:51091/AccountService.svc/Register", "POST", JsonConvert.SerializeObject(accountData))) as JToken;
+                var Data = JsonConvert.DeserializeObject(Utilities.HttpRequest.GetHttpRequest(url + "AccountService.svc/Register", "POST", JsonConvert.SerializeObject(accountData))) as JToken;
                 string ResponseData = JsonConvert.DeserializeObject<string>(Data["RegisterResult"].ToString());
                 if (ResponseData.Equals("Success"))
                 {
@@ -41,7 +41,7 @@ namespace UserApplication.Controllers
             }
             catch (Exception ex)
             {
-                throw ex;
+                return RedirectToAction("ErrorPage", "Home", new { ex = ex.Message });
             }
         } 
         #endregion
@@ -58,10 +58,15 @@ namespace UserApplication.Controllers
         {
             try
             {
+                RegisterModel AccountData = null;
                 var loginData = model;
-                var Data=JsonConvert.DeserializeObject(Utilities.HttpRequest.GetHttpRequest("http://localhost:51091/AccountService.svc/Login","POST",JsonConvert.SerializeObject(loginData))) as JToken;
-                RegisterModel AccountData=JsonConvert.DeserializeObject<RegisterModel>(Data["LoginResult"].ToString());
-                
+                if (!string.IsNullOrEmpty(loginData.UserName) && !string.IsNullOrEmpty(loginData.Password))
+                {
+                    var Data = JsonConvert.DeserializeObject(Utilities.HttpRequest.GetHttpRequest(url+"AccountService.svc/Login", "POST", JsonConvert.SerializeObject(loginData))) as JToken;
+                    AccountData = JsonConvert.DeserializeObject<RegisterModel>(Data["LoginResult"].ToString());
+                }
+                else
+                    throw new Exception("Vacant Username or password");
                 if (AccountData != null)
                             {
 
@@ -88,7 +93,7 @@ namespace UserApplication.Controllers
             }
             catch (Exception ex)
             {
-                throw ex;
+                return RedirectToAction("ErrorPage","Home", new { ex=ex.Message });
             }
 
         } 
@@ -103,5 +108,11 @@ namespace UserApplication.Controllers
         } 
         #endregion
 
+        [AllowAnonymous]
+        public ActionResult ErrorPage(string ex)
+        {
+            ViewBag.ErrorMessage = ex;
+            return View();
+        }
     }
 }

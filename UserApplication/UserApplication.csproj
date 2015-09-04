@@ -126,10 +126,11 @@
     <Compile Include="App_Start\FilterConfig.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="App_Start\WebApiConfig.cs" />
-    <Content Include="Content\Images\triangles_abstract_wallpaper.png" />
-    <Content Include="Content\Images\tumblr_m8rakxnbAe1r85i4so1_500.gif" />
-    <Content Include="Content\Images\white.jpg" />
+    <Content Include="Content\Images\BlackWhiteAbstract-Polygon-Background-02-1024.jpg" />
+    <Content Include="Content\Images\oie_transparent.png" />
+    <Content Include="Content\Images\Polygon-final.jpg" />
     <Content Include="Global.asax" />
+    <Content Include="Views\Home\ErrorPage.aspx" />
     <Content Include="Views\Home\Login.aspx" />
     <Content Include="Views\Home\Register.aspx" />
     <Content Include="Views\User\Create.aspx" />
