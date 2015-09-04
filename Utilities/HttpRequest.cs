@@ -44,24 +44,21 @@ namespace Utilities
                 {
                     var responseStream = protocolException.Response.GetResponseStream();
                     var error = new StreamReader(protocolException.Response.GetResponseStream()).ReadToEnd();
-                    //if (!string.IsNullOrEmpty(error))
-                    //{   
-                        //error should not be null
-                        var ErrorBody = JsonConvert.DeserializeObject(error) as JToken;
+
+                        var ErrorBody = JsonConvert.DeserializeObject<MyCustomErrorDetail>(error);
                         if (ErrorBody != null)
                         {
-                            //it can be both generic or custom
-                            if (ErrorBody.Children().Contains("ErrorInfo"))
+                            if (!string.IsNullOrEmpty(ErrorBody.ErrorInfo))
                             {
                                 //it is custom
-                                throw new Exception(ErrorBody["ErrorInfo"].ToString());
+                                throw new Exception(ErrorBody.ErrorInfo);
                             }
                             else
-                                throw new Exception(ErrorBody.ToString());//generic
+                                throw new Exception(JsonConvert.SerializeObject(ErrorBody));//generic
                         }
                         else
                             throw new Exception(error);
-                    //}
+                    
                 }
                 else
                     throw new Exception("There is an unexpected error with reading the stream.", ex);
