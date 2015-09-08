@@ -52,6 +52,13 @@
                 dob.focus();
                 return false;
             }
+            var dobPattern = "[0-9]{1,2}\/[0-9]{1,2}\/[0-9]{4}"
+            if ((dob.value).match(dobPattern) == null) {
+                dobLabel.innerHTML = "*Please enter a valid date of birth";
+                flag = false;
+                emailId.focus();
+                return false;
+            }
             if (lengthOfPhoneNumber == 0) {
                 phoneNumberLabel.innerHTML = "*Please enter the phone number";
             }
@@ -83,7 +90,6 @@
             return flag;
         }
     </script>
-
     <style type="text/css">
         #Logo
         {
@@ -106,20 +112,21 @@
             margin-left: auto;
             margin-right: auto;
             padding-bottom: 15px;
+            width: 350px;
         }
         .Div-TextBox
         {
             padding-top: 5px;
             padding-bottom: 5px;
         }
-        .TextBox
+        .TextBox 
         {
             padding-left: 5px;
             height: 30px;
             font-size: 15px;
             border-radius: 9px;
             border-style: none;
-            width: 98%;
+            width: 345px;
             margin-left: auto;
             margin-right: auto;
         }
@@ -194,8 +201,8 @@
         }
         #Background1
         {
-            width:350px;
-            height:350px;
+            width: 350px;
+            height: 462px;
             border-style: solid;
             border-width: 3px;
             border-color: rgb(217,133,59);
@@ -205,7 +212,9 @@
             display: block;
             margin-left: auto;
             margin-right: auto;
-            animation-duration:.5s;
+            margin-top: 50px;
+            margin-bottom: 50px;
+            animation-duration: .5s;
             animation-name: bounceIn;
             animation-timing-function: ease-in-out;
             font-family: 'Segoe UI' , Frutiger, 'Frutiger Linotype' , 'Dejavu Sans' , 'Helvetica Neue' , Arial, sans-serif;
@@ -215,7 +224,7 @@
             background-color:transparent;
             margin-left:auto;
             margin-right:auto;
-            width:300px;
+            width:350px;
             padding-top:10px;
             text-align: right;
         }
@@ -242,7 +251,7 @@
     </div>
     <div id="Background0">
         <div id="Background1">
-            <h1 style="font-size: 30px; text-align: center;">
+            <h1 style="font-size: 30px; margin-top:0px; text-align: center;">
                 Create User
             </h1>
             <div id="Div-Form">

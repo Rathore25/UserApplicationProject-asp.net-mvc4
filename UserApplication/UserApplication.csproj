@@ -126,6 +126,7 @@
     <Compile Include="App_Start\FilterConfig.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="App_Start\WebApiConfig.cs" />
+    <Content Include="Content\Images\address_book-512.png" />
     <Content Include="Content\Images\BlackWhiteAbstract-Polygon-Background-02-1024.jpg" />
     <Content Include="Content\Images\oie_transparent.png" />
     <Content Include="Content\Images\Polygon-final.jpg" />
@@ -163,6 +164,9 @@
       <Project>{057BEB40-5A22-474B-B59E-31F710C7416F}</Project>
       <Name>Utilities</Name>
     </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Shared\LoginRegisterMaster.Master" />
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>

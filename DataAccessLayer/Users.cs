@@ -29,7 +29,7 @@ namespace DataAccessLayer
                 Connection.Open();
                 MySqlCommand InsertCommand = new MySqlCommand("udsp_userdataschema_create", Connection);
                 InsertCommand.CommandType = CommandType.StoredProcedure;
-                //InsertCommand.CommandText = "INSERT INTO usertable(uid,name,dob,city,phone,emailid) VALUES(@uid,@list0,@list1,@list2,@list3,@list4)";
+                //InsertCommand.CommandText = "INSERT INTO usertable(uid,name,dob,city,phone,emailid,fid) VALUES(@uid,@list0,@list1,@list2,@list3,@list4,@list5)";
                 Guid GuidId = Guid.NewGuid();
                 InsertCommand.Parameters.AddWithValue("var_uid", GuidId.ToString());
                 InsertCommand.Parameters.AddWithValue("var_name", UserData.Name);
@@ -37,6 +37,7 @@ namespace DataAccessLayer
                 InsertCommand.Parameters.AddWithValue("var_city", UserData.City);
                 InsertCommand.Parameters.AddWithValue("var_phone", UserData.PhoneNumber);
                 InsertCommand.Parameters.AddWithValue("var_emailid", UserData.EmailId);
+                InsertCommand.Parameters.AddWithValue("var_fid", UserData.Fid);
                 if (InsertCommand.ExecuteNonQuery() == 0)
                     throw new Exception("No row was Inserted");
             }
@@ -56,7 +57,7 @@ namespace DataAccessLayer
         #endregion
 
         #region RetrieveAllRows
-        public static List<UserDataObject> AllUser()
+        public static List<UserDataObject> AllUser(string Fid)
         {
             _log.Debug("DatabaseConnectionProvider.AllUser entered");
             MySqlConnection Connection = new MySqlConnection(ConnString);
@@ -66,6 +67,7 @@ namespace DataAccessLayer
                 MySqlCommand SelectCommand = new MySqlCommand("udsp_userdataschema_retrieve", Connection);
                 SelectCommand.CommandType = CommandType.StoredProcedure;
                 SelectCommand.Parameters.AddWithValue("var_uid", string.Empty);
+                SelectCommand.Parameters.AddWithValue("var_fid", Fid);
                 List<UserDataObject> UserData = new List<UserDataObject>();
                 using (MySqlDataReader Reader = SelectCommand.ExecuteReader())
                 {
@@ -80,6 +82,7 @@ namespace DataAccessLayer
                         RowData.City = Reader["city"].ToString();
                         RowData.PhoneNumber = Reader["phone"].ToString();
                         RowData.EmailId = Reader["emailid"].ToString();
+                        RowData.Fid = Reader["fid"].ToString();
                         UserData.Add(RowData);
                     }
                 }
@@ -117,10 +120,10 @@ namespace DataAccessLayer
             try
             {
                 Connection.Open();
-
                 MySqlCommand SpecificUserCommand = new MySqlCommand("udsp_userdataschema_retrieve", Connection);
                 SpecificUserCommand.CommandType = CommandType.StoredProcedure;
                 SpecificUserCommand.Parameters.AddWithValue("var_uid", uid);
+                SpecificUserCommand.Parameters.AddWithValue("var_fid", string.Empty);
                 MySqlDataReader Reader = SpecificUserCommand.ExecuteReader();
 
                 DataObject.UserDataObject UserRow = new DataObject.UserDataObject();
@@ -133,6 +136,7 @@ namespace DataAccessLayer
                     UserRow.City = (Reader["city"].ToString());
                     UserRow.PhoneNumber = (Reader["phone"].ToString());
                     UserRow.EmailId = (Reader["emailid"].ToString());
+                    UserRow.Fid=(Reader["fid"].ToString());
                 }
                 _log.Debug("Result :=" + JsonConvert.SerializeObject(UserRow, Formatting.Indented));
                 return UserRow;
@@ -171,6 +175,7 @@ namespace DataAccessLayer
                 UpdateCommand.Parameters.AddWithValue("var_city", RowData.City);
                 UpdateCommand.Parameters.AddWithValue("var_phone", RowData.PhoneNumber);
                 UpdateCommand.Parameters.AddWithValue("var_emailid", RowData.EmailId);
+                UpdateCommand.Parameters.AddWithValue("var_fid", RowData.Fid);
                 if (UpdateCommand.ExecuteNonQuery() == 0)
                     throw new Exception("No row was updated");
             }

@@ -8,6 +8,7 @@ namespace UserApplication.Models
 {
     public class UserModel
     {
+        public string Fid { get; set; }
         public string AutoId { get; set; }
         public string Uid { get; set; }
 

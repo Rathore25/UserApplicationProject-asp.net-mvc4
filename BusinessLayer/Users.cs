@@ -33,12 +33,12 @@ namespace BusinessLayer
         #endregion
 
         #region Retrieve
-        public static List<DataObject.UserDataObject> RetrieveAllUser()
+        public static List<DataObject.UserDataObject> RetrieveAllUser(string Fid)
         {
             _log.Debug("BusinessLayer.RetrieveAllUser Entered");
             try
             {
-                return DataAccessLayer.Users.AllUser();
+                return DataAccessLayer.Users.AllUser(Fid);
             }
             catch (Exception exception)
             {

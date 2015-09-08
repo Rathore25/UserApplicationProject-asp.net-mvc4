@@ -9,6 +9,7 @@ using System.IO;
 using Newtonsoft.Json;
 using log4net;
 using Newtonsoft.Json.Linq;
+using System.Web.Security;
 
 namespace UserApplication.Controllers
 {
@@ -35,12 +36,16 @@ namespace UserApplication.Controllers
             UserModel UserData = new UserModel();
             if (ModelState.IsValid)
             {
+                HttpCookie AuthCookie = Request.Cookies[FormsAuthentication.FormsCookieName];
+                FormsAuthenticationTicket Ticket = FormsAuthentication.Decrypt(AuthCookie.Value);
+                RegisterModel RegisteredUserData = JsonConvert.DeserializeObject<RegisterModel>(Ticket.UserData);
+                
                 var DateofBirth = Convert.ToDateTime(model.Dob);
                 JsonSerializerSettings DateFormat = new JsonSerializerSettings
                 {
                     DateFormatHandling = DateFormatHandling.MicrosoftDateFormat
                 };
-
+                UserData.Fid=(RegisteredUserData.Guid);
                 UserData.Name = (model.Name ?? string.Empty);
                 UserData.Dob = (DateofBirth);
                 UserData.City = (model.City ?? string.Empty);
@@ -78,7 +83,11 @@ namespace UserApplication.Controllers
                 List<UserModel> UserData = null ;
                 try
                 {
-                    var UserDataResponse = JsonConvert.DeserializeObject(Utilities.HttpRequest.GetHttpRequest(url + "UserService.svc/Users", "GET", string.Empty)) as JToken;
+                    HttpCookie AuthCookie = Request.Cookies[FormsAuthentication.FormsCookieName];
+                    FormsAuthenticationTicket Ticket = FormsAuthentication.Decrypt(AuthCookie.Value);
+                    RegisterModel  RegisteredUserData =JsonConvert.DeserializeObject<RegisterModel>(Ticket.UserData);
+                    string Fid = RegisteredUserData.Guid;
+                    var UserDataResponse = JsonConvert.DeserializeObject(Utilities.HttpRequest.GetHttpRequest(url + "UserService.svc/Users", "POST",JsonConvert.SerializeObject(Fid,Formatting.Indented))) as JToken;
                     if (UserDataResponse!=null)
                     {
                         UserData = JsonConvert.DeserializeObject<List<UserModel>>(UserDataResponse["RetrieveAllUsersResult"].ToString()); 
@@ -146,6 +155,11 @@ namespace UserApplication.Controllers
                         DateFormatHandling = DateFormatHandling.MicrosoftDateFormat
                     };
 
+                    HttpCookie AuthCookie = Request.Cookies[FormsAuthentication.FormsCookieName];
+                    FormsAuthenticationTicket Ticket = FormsAuthentication.Decrypt(AuthCookie.Value);
+                    RegisterModel RegisteredUserData = JsonConvert.DeserializeObject<RegisterModel>(Ticket.UserData);
+
+                    UserData.Fid = RegisteredUserData.Guid;
                     UserData.Uid = model.Uid;
                     UserData.Name = (model.Name ?? string.Empty);
                     UserData.Dob = (DateofBirth);

@@ -1,10 +1,15 @@
-﻿<%@ Page Language="C#" Inherits="System.Web.Mvc.ViewPage<UserApplication.Models.LoginModel>" %>
+﻿<%@ Page Language="C#" MasterPageFile="~/Shared/LoginRegisterMaster.Master" Inherits="System.Web.Mvc.ViewPage<UserApplication.Models.LoginModel>" %>
 
 <!DOCTYPE html>
 <html>
 <head runat="server">
     <meta name="viewport" content="width=device-width" />
-    <title>Login</title>
+    <asp:Content ID="Content1" ContentPlaceHolderID="TitleContent" runat="Server">
+    Login
+    </asp:Content>
+    <asp:Content ID="Content2" ContentPlaceHolderID="MainContent" runat="Server">
+    Login
+    </asp:Content>
     <script language="javascript" type="text/javascript">
         var userNameLabel;passwordLabel;
         function init() {
@@ -122,6 +127,14 @@
             margin-left: auto;
             margin-right: auto;
         }
+        .TextBox:valid
+        {
+            background-color: #ddffdd;
+        }
+        .TextBox:invalid
+        {
+            background-color: #ffdddd;
+        }
         .Heading
         {
             font-family:'Segoe UI', Frutiger, 'Frutiger Linotype', 'Dejavu Sans', 'Helvetica Neue', Arial, sans-serif;
@@ -204,7 +217,7 @@
 </head>
 <body id="Body" onload="init()">
     <div id="Div-Logo">
-        <img id="Logo" src="../../Content/Images/oie_transparent.png" alt="Logo" />
+        <img id="Logo" src="../../Content/Images/address_book-512.png" alt="Logo" />
     </div>
     <% using (Html.BeginForm())
        { %>
@@ -217,12 +230,12 @@
                 Please Enter Your Information</p>--%>
             <div id="Div-Form">
                 <div class="Div-TextBox">
-                    <%: Html.TextBoxFor(model => model.UserName, new { @class="TextBox", @PlaceHolder="Username*"})%>
+                    <%: Html.TextBoxFor(model => model.UserName, new { @class="TextBox", @PlaceHolder="Username*", @required="required autofocus"})%>
                     <label id="userNameLabel" class="ErrorLabel">&nbsp;</label>
                 </div>
 
                 <div class="Div-TextBox">
-                    <%: Html.PasswordFor(model => model.Password, new { @class = "TextBox", @PlaceHolder = "Password*" })%>
+                    <%: Html.PasswordFor(model => model.Password, new { @class = "TextBox", @PlaceHolder = "Password*", @required="required" })%>
                     <label id="passwordLabel" class="ErrorLabel">&nbsp;</label>
                 </div>
 

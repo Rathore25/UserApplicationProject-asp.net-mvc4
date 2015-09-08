@@ -85,10 +85,13 @@
             width: 1000px;
             text-align: left;
             border-style: solid;
+            border-collapse:collapse;
             /*border-color: rgb(217,133,59);*/
         }
         #Table td
         {
+            padding-left: 5px;
+            padding-right: 5px;
             padding-top: 10px;
             padding-bottom: 10px;
             border-style: solid;
@@ -98,6 +101,8 @@
         }
         #Table th
         {
+            padding-left: 5px;
+            padding-right: 5px;
             padding-top: 10px;
             padding-bottom: 10px;
             border-style: solid;
@@ -112,6 +117,10 @@
         #Table tr:nth-child(odd)
         {
             background-color:White;
+        }
+        #Table tr:hover
+        {
+            background-color:rgb(165, 219, 219);
         }
         .Button
         {
@@ -133,7 +142,7 @@
     <div id="Div-Background">
         <div id="Div-TableHeading">
             <h1 id="Heading">
-                User Table</h1>
+                My Contacts</h1>
         </div>
         <div id="Div-Header">
             <%: Html.ActionLink("Create", "Create", "User",   

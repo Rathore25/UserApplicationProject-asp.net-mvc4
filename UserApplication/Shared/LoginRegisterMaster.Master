@@ -1,0 +1,53 @@
+﻿<%@ Master Language="C#" Inherits="System.Web.Mvc.ViewMasterPage" %>
+
+<!DOCTYPE html>
+<html>
+<head runat="server">
+    <meta name="viewport" content="width=device-width" />
+    <title>
+        <asp:ContentPlaceHolder ID="TitleContent" runat="server" />
+    </title>
+    <style type="text/css">
+        body
+        {
+            font-family:'Segoe UI', Frutiger, 'Frutiger Linotype', 'Dejavu Sans', 'Helvetica Neue', Arial, sans-serif;
+        }
+        #Header
+        {
+            margin-left:0px;
+            margin-right:0px;
+            padding-left:20px;
+            padding-right:20px;
+            background-image:url("../../Content/Images/Polygon-final.jpg");
+            color: rgb(51,79,78);
+        }
+        #Logo
+        {
+            height:100px;
+            width:100px;
+            float:left;
+        }
+        #Heading1
+        {
+            margin-left:10px;
+            margin-right:10px;
+        }
+        #LogutContent
+        {
+            float:right;
+        }
+    </style>
+</head>
+<body>
+    <div id="Header">
+        <img id="Logo" src="../../Content/Images/address_book-512.png" alt="Logo" />
+        <h1 id="Heading1">Contact Logger Web Application</h1>
+        <asp:ContentPlaceHolder ID="LogoutContent" runat="server">
+        </asp:ContentPlaceHolder>
+    </div>
+    <div>
+        <asp:ContentPlaceHolder ID="MainContent" runat="server">
+        </asp:ContentPlaceHolder>
+    </div>
+</body>
+</html>

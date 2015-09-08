@@ -7,6 +7,8 @@ namespace DataObject
 {
     public class UserDataObject
     {
+        public string Fid { get; set; }
+
         public string AutoId { get; set; }
 
         public string Uid { get; set; }

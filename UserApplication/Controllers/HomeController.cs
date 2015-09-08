@@ -85,7 +85,6 @@ namespace UserApplication.Controllers
                                     Cookie.Expires = Ticket.Expiration;
                                 }
                                 System.Web.HttpContext.Current.Response.Cookies.Add(Cookie);
-
                                 return RedirectToAction("Index", "User");
                             }
                             else

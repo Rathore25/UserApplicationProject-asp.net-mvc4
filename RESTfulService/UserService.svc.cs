@@ -33,13 +33,13 @@ namespace RESTfulService
         #endregion
 
         #region Retrieve
-        public List<UserDataObject> RetrieveAllUsers()
+        public List<UserDataObject> RetrieveAllUsers(string Fid)
         {
             try
             {
                 List<UserDataObject> listOut = new List<UserDataObject>();
 
-                List<DataObject.UserDataObject> listReceived = BusinessLayer.Users.RetrieveAllUser();
+                List<DataObject.UserDataObject> listReceived = BusinessLayer.Users.RetrieveAllUser(Fid);
                 foreach (var item in listReceived)
                 {
                     UserDataObject Data = new UserDataObject();

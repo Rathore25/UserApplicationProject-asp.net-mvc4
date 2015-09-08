@@ -24,7 +24,7 @@
     <meta name="viewport" content="width=device-width" />
     <title><asp:ContentPlaceHolder ID="TitleContent" runat="server" /></title>
 </head>
-<body id="Body">
+<body id="Body" onload="init()">
     
         <asp:ContentPlaceHolder ID="MainContent" runat="server">
         

@@ -1,4 +1,4 @@
-﻿<%@ Page Language="C#" Inherits="System.Web.Mvc.ViewPage<UserApplication.Models.RegisterModel>" %>
+﻿<%@ Page Language="C#" MasterPageFile="~/Shared/LoginRegisterMaster.Master" Inherits="System.Web.Mvc.ViewPage<UserApplication.Models.RegisterModel>" %>
 
 <!DOCTYPE html>
 <html>

@@ -54,14 +54,14 @@ namespace RESTfulService
         #region Retrieve
         [OperationContract]
         [WebInvoke(
-                    Method = "GET",
+                    Method = "POST",
                     RequestFormat = WebMessageFormat.Json,
                     ResponseFormat = WebMessageFormat.Json,
                     BodyStyle = WebMessageBodyStyle.WrappedResponse,
                     UriTemplate = "/Users"
                    )]
 
-        List<UserDataObject> RetrieveAllUsers(); 
+        List<UserDataObject> RetrieveAllUsers(string Fid);
         #endregion
 
         #region Delete
@@ -81,6 +81,8 @@ namespace RESTfulService
     [DataContract]
     public class UserDataObject
     {
+        [DataMember]
+        public string Fid { get; set; }
         [DataMember]
         public string AutoId { get; set; }
         [DataMember]

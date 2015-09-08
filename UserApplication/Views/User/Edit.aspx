@@ -15,7 +15,97 @@
       }
     );
     </script>
+    <script language="javascript" type="text/javascript">
+        var nameLabel, dobLabel, cityLabel, phoneNumberLabel, emailIdLabel;
+        function init() {
+            nameLabel = document.getElementById('nameLabel');
+            dobLabel = document.getElementById('dobLabel');
+            cityLabel = document.getElementById('cityLabel');
+            phoneNumberLabel = document.getElementById('phoneNumberLabel');
+            emailIdLabel = document.getElementById('emailIdLabel');
+        }
+        function ClearValidation() {
+            nameLabel.innerHTML = "&nbsp;";
+            dobLabel.innerHTML = "&nbsp;";
+            cityLabel.innerHTML = "&nbsp;";
+            phoneNumberLabel.innerHTML = "&nbsp;";
+            emailIdLabel.innerHTML = "&nbsp;";
+            return true;
+        }
+        function Validate() {
+            ClearValidation();
+            var flag = true;
+            var name = document.getElementById('Name');
+            var dob = document.getElementById('Dob');
+            var city = document.getElementById('City');
+            var phoneNumber = document.getElementById('PhoneNumber');
+            var emailId = document.getElementById('EmailId');
+            var lengthOfPhoneNumber = ((phoneNumber.value).toString()).length;
+            if (name.value == "") {
+                nameLabel.innerHTML = "*Please enter a Name";
+                flag = false;
+                name.focus();
+                return false;
+            }
+            if (dob.value == "") {
+                dobLabel.innerHTML = "*Please enter date of birth";
+                flag = false;
+                dob.focus();
+                return false;
+            }
+            var dobPattern = "[0-9]{1,2}\/[0-9]{1,2}\/[0-9]{4}"
+            if ((dob.value).match(dobPattern) == null) {
+                dobLabel.innerHTML = "*Please enter a valid date of birth";
+                flag = false;
+                emailId.focus();
+                return false;
+            }
+            if (lengthOfPhoneNumber == 0) {
+                phoneNumberLabel.innerHTML = "*Please enter the phone number";
+            }
+            if (lengthOfPhoneNumber != 10) {
+                phoneNumberLabel.innerHTML = "*Please enter a 10 digit phone number";
+                flag = false;
+                phoneNumber.focus();
+                return false;
+            }
+            if (city.value == "") {
+                cityLabel.innerHTML = "*Please enter city";
+                flag = false;
+                city.focus();
+                return false;
+            }
+            if (emailId.value == "") {
+                emailIdLabel.innerHTML = "*Please enter your EmailId";
+                flag = false;
+                emailId.focus();
+                return false;
+            }
+            var emailPattern = "[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Za-z]{2,4}"
+            if ((emailId.value).match(emailPattern) == null) {
+                emailIdLabel.innerHTML = "*Please enter a valid email id";
+                flag = false;
+                emailId.focus();
+                return false;
+            }
+            return flag;
+        }
+    </script>
     <style type="text/css">
+        #Logo
+        {
+            width: 100px; 
+            height: 40px;
+            margin-left: auto; 
+            margin-right: auto;
+        }
+        #Div-Logo
+        {
+            text-align: center;
+            width:150px;
+            margin-right:auto;
+            margin-left:auto;
+        }
         #Div-Form
         {
             text-align: left;
@@ -23,20 +113,21 @@
             margin-left: auto;
             margin-right: auto;
             padding-bottom: 15px;
+            width: 350px;
         }
         .Div-TextBox
         {
             padding-top: 5px;
             padding-bottom: 5px;
         }
-        .TextBox
+        .TextBox 
         {
             padding-left: 5px;
             height: 30px;
             font-size: 15px;
             border-radius: 9px;
             border-style: none;
-            width: 98%;
+            width: 345px;
             margin-left: auto;
             margin-right: auto;
         }
@@ -111,8 +202,8 @@
         }
         #Background1
         {
-            width:350px;
-            height:350px;
+            width: 350px;
+            height: 462px;
             border-style: solid;
             border-width: 3px;
             border-color: rgb(217,133,59);
@@ -122,49 +213,89 @@
             display: block;
             margin-left: auto;
             margin-right: auto;
-            animation-duration:.5s;
+            margin-top: 50px;
+            margin-bottom: 50px;
+            animation-duration: .5s;
             animation-name: bounceIn;
             animation-timing-function: ease-in-out;
             font-family: 'Segoe UI' , Frutiger, 'Frutiger Linotype' , 'Dejavu Sans' , 'Helvetica Neue' , Arial, sans-serif;
+        }
+        #Div-Footer
+        {
+            background-color:transparent;
+            margin-left:auto;
+            margin-right:auto;
+            width:350px;
+            padding-top:10px;
+            text-align: right;
+        }
+        .ChangeViewButton
+        {
+            text-decoration:none;
+            color:rgb(51,79,78);
+        }
+        .ChangeViewButton:hover
+        {
+            color:rgb(255, 90, 0);
+        }
+        .ErrorLabel
+        {
+            font-size:12px;
+            color:Red;
         }
     </style>
     <% using (Html.BeginForm())
        { %>
     <%: Html.ValidationSummary(true) %>
+    <div id="Div-Logo">
+        <img id="Logo" src="../../Content/Images/oie_transparent.png" alt="Logo" />
+    </div>
     <div id="Background0">
         <div id="Background1">
-            <h1 style="font-size: 30px; text-align: center;">
+            <h1 style="font-size: 30px; margin-top: 0px; text-align: center;">
                 Update User Details
             </h1>
+            <div class="editor-field">
+                <%: Html.HiddenFor(model => model.Uid)%>
+                <%: Html.ValidationMessageFor(model => model.Uid)%>
+            </div>
             <div id="Div-Form">
-                <div class="editor-field">
-                    <%: Html.HiddenFor(model => model.Uid)%>
-                    <%: Html.ValidationMessageFor(model => model.Uid)%>
+                <div class="Div-TextBox">
+                    <%: Html.TextBoxFor(model => model.Name, new { @class = "TextBox" })%>
+                    <label id="nameLabel" class="ErrorLabel">
+                        &nbsp;</label>
                 </div>
                 <div class="Div-TextBox">
-                    <%: Html.TextBoxFor(model => model.Name, new { @class = "TextBox", @PlaceHolder = "Username*" })%>
+                    <%: Html.TextBoxFor(model => model.Dob, new { @class = "TextBox" })%>
+                    <label id="dobLabel" class="ErrorLabel">
+                        &nbsp;</label>
                 </div>
                 <div class="Div-TextBox">
-                    <%: Html.TextBoxFor(model => model.Dob, new { @class = "TextBox", @PlaceHolder = "01/01/1900" })%>
+                    <%: Html.TextBoxFor(model => model.City, new { @class = "TextBox" })%>
+                    <label id="cityLabel" class="ErrorLabel">
+                        &nbsp;</label>
                 </div>
                 <div class="Div-TextBox">
-                    <%: Html.TextBoxFor(model => model.City, new { @class = "TextBox", @PlaceHolder = "Confirm Password*" })%>
+                    <%: Html.TextBoxFor(model => model.PhoneNumber, new { @class = "TextBox" })%>
+                    <label id="phoneNumberLabel" class="ErrorLabel">
+                        &nbsp;</label>
                 </div>
                 <div class="Div-TextBox">
-                    <%: Html.TextBoxFor(model => model.PhoneNumber, new { @class = "TextBox", @PlaceHolder = "Full name" })%>
-                </div>
-                <div class="Div-TextBox">
-                    <%: Html.TextBoxFor(model => model.EmailId, new { @class = "TextBox", @PlaceHolder = "Email Id*" })%>
+                    <%: Html.TextBoxFor(model => model.EmailId, new { @class = "TextBox" })%>
+                    <label id="emailIdLabel" class="ErrorLabel">
+                        &nbsp;</label>
                 </div>
             </div>
             <div id="Div-SubmitButton">
                 <button id="SubmitButton" onclick="return Validate()" type="submit">
                     Update</button>
             </div>
+            <div id="Div-Footer">
+                <%: Html.ActionLink("Back to List", "Index", "User",   
+                    null, //   Route args if needed; null if not.
+                    new { @class="ChangeViewButton"})%>
+            </div>
         </div>
     </div>
     <% } %>
-    <div class="Return">
-        <%: Html.ActionLink("Back to List", "Index", "User") %>
-    </div>
 </asp:Content>
