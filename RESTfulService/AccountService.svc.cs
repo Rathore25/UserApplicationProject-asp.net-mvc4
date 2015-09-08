@@ -27,18 +27,28 @@ namespace RESTfulService
             }
         }
 
-        public DataObject.RegisterDataObject Login(DataObject.LoginDataObject loginData)
+        public RegisterDataObject Login(DataObject.LoginDataObject loginData)
         {
             try
             {
-                DataObject.RegisterDataObject Data= BusinessLayer.Accounts.Validate(loginData);
-                if (string.IsNullOrEmpty(Data.Guid))
+                DataObject.RegisterDataObject RegisterData= BusinessLayer.Accounts.Validate(loginData);
+                if (string.IsNullOrEmpty(RegisterData.Guid) || string.IsNullOrEmpty(RegisterData.UserName))
                 {
                     MyCustomErrorDetail Error = new MyCustomErrorDetail("Error in Logging in", "Wrong Username or password");
                     throw new WebFaultException<MyCustomErrorDetail>(Error, System.Net.HttpStatusCode.NotFound);
                 }
                 else
+                {
+                    RegisterDataObject Data = new RegisterDataObject();
+                    Data.AutoId = RegisterData.AutoId;
+                    Data.ConfirmPassword = RegisterData.ConfirmPassword;
+                    Data.EmailId = RegisterData.EmailId;
+                    Data.FullName = RegisterData.FullName;
+                    Data.Guid = RegisterData.Guid;
+                    Data.Password = RegisterData.Password;
+                    Data.UserName = RegisterData.UserName;
                     return Data;
+                }
             }
             catch (Exception ex)
             {

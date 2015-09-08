@@ -50,8 +50,7 @@ namespace Utilities
                         {
                             if (!string.IsNullOrEmpty(ErrorBody.ErrorInfo))
                             {
-                                //it is custom
-                                throw new Exception(ErrorBody.ErrorInfo);
+                                throw new Exception(ErrorBody.ErrorDetails);
                             }
                             else
                                 throw new Exception(JsonConvert.SerializeObject(ErrorBody));//generic

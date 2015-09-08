@@ -31,7 +31,7 @@ namespace UserApplication.Controllers
             {
                 var accountData = model ;
                 var Data = JsonConvert.DeserializeObject(Utilities.HttpRequest.GetHttpRequest(url + "AccountService.svc/Register", "POST", JsonConvert.SerializeObject(accountData))) as JToken;
-                string ResponseData = JsonConvert.DeserializeObject<string>(Data["RegisterResult"].ToString());
+                string ResponseData = Data["RegisterResult"].ToString();
                 if (ResponseData.Equals("Success"))
                 {
                     return RedirectToAction("Login", "Home");
@@ -66,7 +66,7 @@ namespace UserApplication.Controllers
                     AccountData = JsonConvert.DeserializeObject<RegisterModel>(Data["LoginResult"].ToString());
                 }
                 else
-                    throw new Exception("Vacant Username or password");
+                    throw new Exception("Wrong Username or password");
                 if (AccountData != null)
                             {
 

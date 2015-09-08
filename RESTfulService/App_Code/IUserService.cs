@@ -37,7 +37,7 @@ namespace RESTfulService
                     UriTemplate = "/User"
                    )]
 
-        DataObject.UserDataObject RetrieveUser(string userId);
+        UserDataObject RetrieveUser(string userId);
 
         [OperationContract]
         [WebInvoke(
@@ -61,7 +61,7 @@ namespace RESTfulService
                     UriTemplate = "/Users"
                    )]
 
-        List<DataObject.UserDataObject> RetrieveAllUsers(); 
+        List<UserDataObject> RetrieveAllUsers(); 
         #endregion
 
         #region Delete
@@ -76,5 +76,24 @@ namespace RESTfulService
 
         string DeleteUser(string uid); 
         #endregion
+    }
+
+    [DataContract]
+    public class UserDataObject
+    {
+        [DataMember]
+        public string AutoId { get; set; }
+        [DataMember]
+        public string Uid { get; set; }
+        [DataMember]
+        public string Name { get; set; }
+        [DataMember]
+        public DateTime Dob { get; set; }
+        [DataMember]
+        public string City { get; set; }
+        [DataMember]
+        public string PhoneNumber { get; set; }
+        [DataMember]
+        public string EmailId { get; set; }
     }
 }

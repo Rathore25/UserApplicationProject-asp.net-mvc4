@@ -27,7 +27,7 @@ namespace DataAccessLayer
             try
             {
                 Connection.Open();
-                MySqlCommand InsertCommand = new MySqlCommand("udsp_userdataschema_insertrow", Connection);
+                MySqlCommand InsertCommand = new MySqlCommand("udsp_userdataschema_create", Connection);
                 InsertCommand.CommandType = CommandType.StoredProcedure;
                 //InsertCommand.CommandText = "INSERT INTO usertable(uid,name,dob,city,phone,emailid) VALUES(@uid,@list0,@list1,@list2,@list3,@list4)";
                 Guid GuidId = Guid.NewGuid();
@@ -63,8 +63,9 @@ namespace DataAccessLayer
             try
             {
                 Connection.Open();
-                MySqlCommand SelectCommand = new MySqlCommand("udsp_userdataschema_allUser", Connection);
+                MySqlCommand SelectCommand = new MySqlCommand("udsp_userdataschema_retrieve", Connection);
                 SelectCommand.CommandType = CommandType.StoredProcedure;
+                SelectCommand.Parameters.AddWithValue("var_uid", string.Empty);
                 List<UserDataObject> UserData = new List<UserDataObject>();
                 using (MySqlDataReader Reader = SelectCommand.ExecuteReader())
                 {
@@ -117,7 +118,7 @@ namespace DataAccessLayer
             {
                 Connection.Open();
 
-                MySqlCommand SpecificUserCommand = new MySqlCommand("udsp_userdatabaseschema_specificRowData", Connection);
+                MySqlCommand SpecificUserCommand = new MySqlCommand("udsp_userdataschema_retrieve", Connection);
                 SpecificUserCommand.CommandType = CommandType.StoredProcedure;
                 SpecificUserCommand.Parameters.AddWithValue("var_uid", uid);
                 MySqlDataReader Reader = SpecificUserCommand.ExecuteReader();
@@ -161,7 +162,7 @@ namespace DataAccessLayer
             try
             {
                 Connection.Open();
-                MySqlCommand UpdateCommand = new MySqlCommand("udsp_userdataschema_updateRow", Connection);
+                MySqlCommand UpdateCommand = new MySqlCommand("udsp_userdataschema_update", Connection);
                 UpdateCommand.CommandType = CommandType.StoredProcedure;
 
                 UpdateCommand.Parameters.AddWithValue("var_uid", RowData.Uid);
@@ -198,7 +199,7 @@ namespace DataAccessLayer
             try
             {
                 Connection.Open();
-                MySqlCommand DeleteCommand = new MySqlCommand("udsp_userdataschema_deleteRow", Connection);
+                MySqlCommand DeleteCommand = new MySqlCommand("udsp_userdataschema_delete", Connection);
                 DeleteCommand.CommandType = CommandType.StoredProcedure;
 
                 DeleteCommand.Parameters.AddWithValue("var_uid", uid);

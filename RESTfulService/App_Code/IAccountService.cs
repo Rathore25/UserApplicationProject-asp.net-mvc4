@@ -33,7 +33,7 @@ namespace RESTfulService
                     UriTemplate = "/Login"
                    )]
 
-        DataObject.RegisterDataObject Login(DataObject.LoginDataObject loginData);
+        RegisterDataObject Login(DataObject.LoginDataObject loginData);
     }
 
     [DataContract]
@@ -50,5 +50,33 @@ namespace RESTfulService
 
         [DataMember]
         public string ErrorDetails { get; private set; }
+    }
+
+    [DataContract]
+    public class LoginDataObject
+    {
+        [DataMember]
+        public string UserName { get; set; }
+        [DataMember]
+        public string Password { get; set; }
+    }
+
+    [DataContract]
+    public class RegisterDataObject
+    {
+        [DataMember]
+        public string AutoId { get; set; }
+        [DataMember]
+        public string Guid { get; set; }
+        [DataMember]
+        public string UserName { get; set; }
+        [DataMember]
+        public string Password { get; set; }
+        [DataMember]
+        public string ConfirmPassword { get; set; }
+        [DataMember]
+        public string FullName { get; set; }
+        [DataMember]
+        public string EmailId { get; set; }
     }
 }

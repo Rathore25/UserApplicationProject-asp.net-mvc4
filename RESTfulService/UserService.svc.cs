@@ -16,9 +16,8 @@ namespace RESTfulService
 
         private static readonly ILog _log = LogManager.GetLogger(typeof(UserService));
 
-
-
-        public string AddUser(UserDataObject userData)
+        #region Create
+        public string AddUser(DataObject.UserDataObject userData)
         {
             try
             {
@@ -30,20 +29,63 @@ namespace RESTfulService
                 MyCustomErrorDetail Error = new MyCustomErrorDetail("Error in Adding User", ex.Message);
                 throw new WebFaultException<MyCustomErrorDetail>(Error, System.Net.HttpStatusCode.InternalServerError);
             }
-        }
+        } 
+        #endregion
 
+        #region Retrieve
+        public List<UserDataObject> RetrieveAllUsers()
+        {
+            try
+            {
+                List<UserDataObject> listOut = new List<UserDataObject>();
+
+                List<DataObject.UserDataObject> listReceived = BusinessLayer.Users.RetrieveAllUser();
+                foreach (var item in listReceived)
+                {
+                    UserDataObject Data = new UserDataObject();
+                    Data.AutoId = item.AutoId;
+                    Data.City = item.City;
+                    Data.Dob = item.Dob;
+                    Data.EmailId = item.EmailId;
+                    Data.Name = item.Name;
+                    Data.PhoneNumber = item.PhoneNumber;
+                    Data.Uid = item.Uid;
+                    listOut.Add(Data);
+                }
+                return listOut;
+            }
+            catch (Exception ex)
+            {
+                MyCustomErrorDetail Error = new MyCustomErrorDetail("Unexpected Error caused by " + ex.Source, ex.Message);
+                throw new WebFaultException<MyCustomErrorDetail>(Error, System.Net.HttpStatusCode.InternalServerError);
+            }
+        }
+        #endregion
+
+        #region Update
         public UserDataObject RetrieveUser(string userId)
         {
             try
             {
-                UserDataObject UserData=BusinessLayer.Users.RetrieveUser(userId);
+                DataObject.UserDataObject UserData = BusinessLayer.Users.RetrieveUser(userId);
                 if (string.IsNullOrEmpty(UserData.AutoId))
                 {
                     MyCustomErrorDetail Error = new MyCustomErrorDetail("No user found", "No User with such id was in the database");
                     throw new WebFaultException<MyCustomErrorDetail>(Error, System.Net.HttpStatusCode.NotFound);
                 }
                 else
-                    return UserData;
+                {
+                    UserDataObject Data = new UserDataObject();
+                    Data.AutoId = UserData.AutoId;
+                    Data.City = UserData.City;
+                    Data.Dob = UserData.Dob;
+                    Data.EmailId = UserData.EmailId;
+                    Data.Name = UserData.Name;
+                    Data.PhoneNumber = UserData.PhoneNumber;
+                    Data.Uid = UserData.Uid;
+
+                    return Data;
+                }
             }
             catch (Exception ex)
             {
@@ -52,7 +94,7 @@ namespace RESTfulService
             }
         }
 
-        public string UpdateUser(UserDataObject userData)
+        public string UpdateUser(DataObject.UserDataObject userData)
         {
             try
             {
@@ -64,21 +106,10 @@ namespace RESTfulService
                 MyCustomErrorDetail Error = new MyCustomErrorDetail("Error in Updating User", ex.Message);
                 throw new WebFaultException<MyCustomErrorDetail>(Error, System.Net.HttpStatusCode.InternalServerError);
             }
-        }
+        } 
+        #endregion
 
-        public List<UserDataObject> RetrieveAllUsers()
-        {
-            try
-            {
-                return BusinessLayer.Users.RetrieveAllUser();
-            }
-            catch (Exception ex)
-            {
-                MyCustomErrorDetail Error = new MyCustomErrorDetail("Unexpected Error caused by " + ex.Source, ex.Message);
-                throw new WebFaultException<MyCustomErrorDetail>(Error, System.Net.HttpStatusCode.InternalServerError);
-            }
-        }
-
+        #region Delete
         public string DeleteUser(string uid)
         {
             try
@@ -91,6 +122,8 @@ namespace RESTfulService
                 MyCustomErrorDetail Error = new MyCustomErrorDetail("Error in Updating User", ex.Message);
                 throw new WebFaultException<MyCustomErrorDetail>(Error, System.Net.HttpStatusCode.InternalServerError);
             }
-        }
+        } 
+        #endregion
+
     }
 }
