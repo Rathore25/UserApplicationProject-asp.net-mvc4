@@ -4,50 +4,75 @@
 <html>
 <head runat="server">
     <meta name="viewport" content="width=device-width" />
+    <link id="Link1" runat="server" rel="shortcut icon" href="~/Content/Images/iOS-contacts-logo.ico"
+        type="image/x-icon" />
+    <link id="Link2" runat="server" rel="icon" href="~/Content/Images/iOS-contacts-logo.ico"
+        type="image/ico" />
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css">
     <title>
         <asp:ContentPlaceHolder ID="TitleContent" runat="server" />
     </title>
     <style type="text/css">
-        body
+        #Body
         {
-            font-family:'Segoe UI', Frutiger, 'Frutiger Linotype', 'Dejavu Sans', 'Helvetica Neue', Arial, sans-serif;
+            background-image: url("../../Content/Images/BlackWhiteAbstract-Polygon-Background-02-1024.jpg");
+            height: 100%;
+            width: 100%;
+            font-family: 'Segoe UI' , Frutiger, 'Frutiger Linotype' , 'Dejavu Sans' , 'Helvetica Neue' , Arial, sans-serif;
+            margin-top:0px;
+                margin-left: 0px;
         }
         #Header
         {
-            margin-left:0px;
-            margin-right:0px;
-            padding-left:20px;
-            padding-right:20px;
-            background-image:url("../../Content/Images/Polygon-final.jpg");
+            width: 100%;
+            height: 60px;
+            margin-left: 0px;
+            margin-right: 10px;
+            border-bottom-style: solid;
+            border-bottom-color: rgb(217,133,80);
+            background-image: url("../../Content/Images/Polygon-final.jpg");
             color: rgb(51,79,78);
+        }
+        #Div-LogoHeadingSubheading
+        {
+            width: 50%;
+            float: left;
+            height: 100%;
+            display: flex;
         }
         #Logo
         {
-            height:100px;
-            width:100px;
-            float:left;
+            height: 50px;
+            width: 60px;
+            float: left;
+            padding: 5px;
         }
-        #Heading1
+        #Heading
         {
-            margin-left:10px;
-            margin-right:10px;
+            margin-top: auto;
+            margin-bottom: auto;
+            font-size: 30px;
+            padding: 10px;
         }
-        #LogutContent
+        #SubHeading
         {
-            float:right;
+            margin-top: auto;
+            margin-bottom: auto;
+            padding: 5px;
         }
     </style>
 </head>
-<body>
+<body id="Body" onload="init()">
     <div id="Header">
-        <img id="Logo" src="../../Content/Images/address_book-512.png" alt="Logo" />
-        <h1 id="Heading1">Contact Logger Web Application</h1>
-        <asp:ContentPlaceHolder ID="LogoutContent" runat="server">
-        </asp:ContentPlaceHolder>
+        <div id="Div-LogoHeadingSubheading">
+            <img id="Logo" src="../../Content/Images/iOS-contacts-logo.png" alt="Logo" />
+            <h1 id="Heading">
+                iManager</h1>
+            <h3 id="SubHeading">
+                -Manage your contacts easily</h3>
+        </div>
     </div>
-    <div>
-        <asp:ContentPlaceHolder ID="MainContent" runat="server">
-        </asp:ContentPlaceHolder>
-    </div>
+    <asp:ContentPlaceHolder ID="MainContent" runat="server">
+    </asp:ContentPlaceHolder>
 </body>
 </html>

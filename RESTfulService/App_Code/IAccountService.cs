@@ -34,6 +34,17 @@ namespace RESTfulService
                    )]
 
         RegisterDataObject Login(DataObject.LoginDataObject loginData);
+
+        [OperationContract]
+        [WebInvoke(
+                    Method = "POST",
+                    RequestFormat = WebMessageFormat.Json,
+                    ResponseFormat = WebMessageFormat.Json,
+                    BodyStyle = WebMessageBodyStyle.WrappedResponse,
+                    UriTemplate = "/Retrieve"
+                   )]
+
+        RegisterDataObject RetrievePassword(DataObject.RegisterDataObject userData);
     }
 
     [DataContract]

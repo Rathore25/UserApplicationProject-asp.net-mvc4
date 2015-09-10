@@ -34,8 +34,7 @@ namespace RESTfulService
                 DataObject.RegisterDataObject RegisterData= BusinessLayer.Accounts.Validate(loginData);
                 if (string.IsNullOrEmpty(RegisterData.Guid) || string.IsNullOrEmpty(RegisterData.UserName))
                 {
-                    MyCustomErrorDetail Error = new MyCustomErrorDetail("Error in Logging in", "Wrong Username or password");
-                    throw new WebFaultException<MyCustomErrorDetail>(Error, System.Net.HttpStatusCode.NotFound);
+                    return new RegisterDataObject();
                 }
                 else
                 {
@@ -53,6 +52,35 @@ namespace RESTfulService
             catch (Exception ex)
             {
                 MyCustomErrorDetail Error = new MyCustomErrorDetail("Unexpected Error caused by "+ex.Source, ex.Message);
+                throw new WebFaultException<MyCustomErrorDetail>(Error, System.Net.HttpStatusCode.InternalServerError);
+            }
+        }
+
+        public RegisterDataObject RetrievePassword(DataObject.RegisterDataObject userData)
+        {
+            try
+            {
+                DataObject.RegisterDataObject Password = BusinessLayer.Accounts.Retrieve(userData);
+                if (string.IsNullOrEmpty(Password.Password))
+                {
+                    return new RegisterDataObject();
+                }
+                else
+                {
+                    RegisterDataObject Data = new RegisterDataObject();
+                    Data.AutoId = Password.AutoId;
+                    Data.ConfirmPassword = Password.ConfirmPassword;
+                    Data.EmailId = Password.EmailId;
+                    Data.FullName = Password.FullName;
+                    Data.Guid = Password.Guid;
+                    Data.Password = Password.Password;
+                    Data.UserName = Password.UserName;
+                    return Data;
+                }
+            }
+            catch (Exception ex)
+            {
+                MyCustomErrorDetail Error = new MyCustomErrorDetail("Unexpected Error caused by " + ex.Source, ex.Message);
                 throw new WebFaultException<MyCustomErrorDetail>(Error, System.Net.HttpStatusCode.InternalServerError);
             }
         }

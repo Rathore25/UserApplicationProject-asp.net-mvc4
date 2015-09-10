@@ -1,10 +1,10 @@
 ﻿<%@ Page Language="C#" MasterPageFile="~/Shared/LoginRegisterMaster.Master" Inherits="System.Web.Mvc.ViewPage<UserApplication.Models.RegisterModel>" %>
 
-<!DOCTYPE html>
-<html>
-<head runat="server">
-    <meta name="viewport" content="width=device-width" />
-    <title>Register</title>
+
+    <asp:Content ID="Content1" ContentPlaceHolderID="TitleContent" runat="Server">
+    Register
+    </asp:Content>
+    <asp:Content ID="Content3" ContentPlaceHolderID="MainContent" runat="Server">
     <script language="javascript" type="text/javascript">
         var usernameLabel, passwordLabel, confirmPasswordLabel, fullNameLabel, emailIdLabel;
         function init() {
@@ -96,30 +96,14 @@
     </script>
     <style type="text/css">
         
-        #Body
-        {
-            background-image: url("../../Content/Images/BlackWhiteAbstract-Polygon-Background-02-1024.jpg");
-            height: 100%;
-            width: 100%;
-        }
-        #Logo
-        {
-            width: 100px;
-            height: 40px;
-            margin-left: auto;
-            margin-right: auto;
-        }
-        #Div-Logo
-        {
+        
+        
+        #Background0
+        {           
             text-align: center;
-            width: 150px;
-            margin-right: auto;
-            margin-left: auto;
+            color: rgb(51,79,78);
+            margin-top: 50px;
         }
-        #Background0 {
-    /* text-align: center; */
-    color: rgb(51,79,78);
-}
         @keyframes bounceIn 
         {
             0%
@@ -139,8 +123,8 @@
         }
         #Background1 
         {
-            width: 400px;
-            height: 460px;
+            width: 350px;
+            height: 450px;
             border-style: solid;
             border-width: 3px;
             border-color: rgb(217,133,59);
@@ -150,7 +134,7 @@
             display: block;
             margin-left: auto;
             margin-right: auto;
-            margin-top: 50px;
+            margin-top: 0px;
             margin-bottom: 50px;
             animation-duration: .5s;
             animation-name: bounceIn;
@@ -194,7 +178,6 @@
         }
         #SubmitButton
         {
-            box-shadow: rgb(245, 151, 142) 0px 0px 0px 0px inset;
             border-radius: 6px;
             border: 1px solid rgb(208, 39, 24);
             display: inline-block;
@@ -206,8 +189,6 @@
             text-decoration: none;
             text-shadow: rgb(129, 14, 5) 1px 2px 4px;
             background: linear-gradient(rgb(217, 150, 80) 5%, rgb(180, 70, 30) 100%) rgb(217,133,59);
-            -webkit-box-shadow: rgba(0,0,0,1) 0 1px 0;
-            -moz-box-shadow: rgba(0,0,0,1) 0 1px 0;
             text-shadow: rgba(0,0,0,.4) 0 1px 0;
             font-family: 'Segoe UI' , Frutiger, 'Frutiger Linotype' , 'Dejavu Sans' , 'Helvetica Neue' , Arial, sans-serif;
         }
@@ -262,11 +243,6 @@
             color:Red;
         }
     </style>
-</head>
-<body id="Body" onload="init()">
-    <div id="Div-Logo">
-        <img id="Logo" src="../../Content/Images/oie_transparent.png" alt="Logo" />
-    </div>
     <% using (Html.BeginForm())
        { %>
     <%: Html.ValidationSummary(true) %>
@@ -313,5 +289,4 @@
         </div>
     </div>
     <% } %>
-</body>
-</html>
+    </asp:Content>

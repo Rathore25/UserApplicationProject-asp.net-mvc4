@@ -126,12 +126,22 @@
     <Compile Include="App_Start\FilterConfig.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="App_Start\WebApiConfig.cs" />
-    <Content Include="Content\Images\address_book-512.png" />
+    <Content Include="Content\CSS\DatatableTheme.css" />
     <Content Include="Content\Images\BlackWhiteAbstract-Polygon-Background-02-1024.jpg" />
+    <Content Include="Content\Images\contacts-iconSmall.png" />
+    <Content Include="Content\Images\delete-20x20.png" />
+    <Content Include="Content\Images\delete-25x25.png" />
+    <Content Include="Content\Images\edit-20x20.png" />
+    <Content Include="Content\Images\exit.png" />
+    <Content Include="Content\Images\iOS-contacts-logo.ico" />
+    <Content Include="Content\Images\iOS-contacts-logo.png" />
+    <Content Include="Content\Images\Logout.png" />
     <Content Include="Content\Images\oie_transparent.png" />
+    <Content Include="Content\Images\OnHover.png" />
     <Content Include="Content\Images\Polygon-final.jpg" />
     <Content Include="Global.asax" />
     <Content Include="Views\Home\ErrorPage.aspx" />
+    <Content Include="Views\Home\ForgotPassword.aspx" />
     <Content Include="Views\Home\Login.aspx" />
     <Content Include="Views\Home\Register.aspx" />
     <Content Include="Views\User\Create.aspx" />
@@ -150,7 +160,6 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
-    <Folder Include="Content\NewFolder1\" />
     <Folder Include="Content\NewFolder2\" />
   </ItemGroup>
   <ItemGroup>

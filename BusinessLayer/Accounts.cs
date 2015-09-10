@@ -32,5 +32,18 @@ namespace BusinessLayer
             }
 
         }
+
+        public static DataObject.RegisterDataObject Retrieve(DataObject.RegisterDataObject userData)
+        {
+            try
+            {
+                return DataAccessLayer.Accounts.RetrievePassword(userData);
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+
+        }
     }
 }

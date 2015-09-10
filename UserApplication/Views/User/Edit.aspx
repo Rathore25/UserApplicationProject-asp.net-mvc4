@@ -1,7 +1,7 @@
 ﻿<%@ Page Language="C#" MasterPageFile="~/Shared/UserCreateUpdate.Master" Inherits="System.Web.Mvc.ViewPage<UserApplication.Models.UserModel>" %>
 
 <asp:Content ID="Content1" ContentPlaceHolderID="TitleContent" runat="Server">
-    Edit
+    Update
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="MainContent" runat="Server">
     <script type="text/javascript">
@@ -10,7 +10,9 @@
           $("#Dob").datepicker
           ({
               changeMonth: true,
-              changeYear: true
+              changeYear: true,
+              maxDate: "-1d",
+              minDate: "-70y"
           });
       }
     );
@@ -60,6 +62,12 @@
                 emailId.focus();
                 return false;
             }
+            if (city.value == "") {
+                cityLabel.innerHTML = "*Please enter city";
+                flag = false;
+                city.focus();
+                return false;
+            }
             if (lengthOfPhoneNumber == 0) {
                 phoneNumberLabel.innerHTML = "*Please enter the phone number";
             }
@@ -69,10 +77,10 @@
                 phoneNumber.focus();
                 return false;
             }
-            if (city.value == "") {
-                cityLabel.innerHTML = "*Please enter city";
+            if (((phoneNumber.value).toString()).match(/[a-z]/i)) {
+                phoneNumberLabel.innerHTML = "*Please enter a 10 digit phone number";
                 flag = false;
-                city.focus();
+                phoneNumber.focus();
                 return false;
             }
             if (emailId.value == "") {
@@ -92,20 +100,6 @@
         }
     </script>
     <style type="text/css">
-        #Logo
-        {
-            width: 100px; 
-            height: 40px;
-            margin-left: auto; 
-            margin-right: auto;
-        }
-        #Div-Logo
-        {
-            text-align: center;
-            width:150px;
-            margin-right:auto;
-            margin-left:auto;
-        }
         #Div-Form
         {
             text-align: left;
@@ -140,7 +134,6 @@
         }
         #SubmitButton
         {
-            box-shadow: rgb(245, 151, 142) 0px 0px 0px 0px inset;
             border-radius: 6px;
             border: 1px solid rgb(208, 39, 24);
             display: inline-block;
@@ -152,8 +145,6 @@
             text-decoration: none;
             text-shadow: rgb(129, 14, 5) 1px 2px 4px;
             background: linear-gradient(rgb(217, 150, 80) 5%, rgb(180, 70, 30) 100%) rgb(217,133,59);
-            -webkit-box-shadow: rgba(0,0,0,1) 0 1px 0;
-            -moz-box-shadow: rgba(0,0,0,1) 0 1px 0;
             text-shadow: rgba(0,0,0,.4) 0 1px 0;
             font-family: 'Segoe UI' , Frutiger, 'Frutiger Linotype' , 'Dejavu Sans' , 'Helvetica Neue' , Arial, sans-serif;
         }
@@ -203,7 +194,6 @@
         #Background1
         {
             width: 350px;
-            height: 462px;
             border-style: solid;
             border-width: 3px;
             border-color: rgb(217,133,59);
@@ -226,17 +216,24 @@
             margin-left:auto;
             margin-right:auto;
             width:350px;
-            padding-top:10px;
             text-align: right;
         }
         .ChangeViewButton
         {
+            /*background-image: url("../../Content/Images/contacts-iconSmall.png");
+            display:-webkit-inline-box;
+            height:35px;
+            width:56px;
+            border-radius:20px;*/
             text-decoration:none;
             color:rgb(51,79,78);
+            background-color:transparent;
+            padding-top:10px;
         }
         .ChangeViewButton:hover
         {
-            color:rgb(255, 90, 0);
+            color:rgb(230,100,50);
+            /*background-image: url("../../Content/Images/OnHover.png");*/
         }
         .ErrorLabel
         {
@@ -247,13 +244,10 @@
     <% using (Html.BeginForm())
        { %>
     <%: Html.ValidationSummary(true) %>
-    <div id="Div-Logo">
-        <img id="Logo" src="../../Content/Images/oie_transparent.png" alt="Logo" />
-    </div>
     <div id="Background0">
         <div id="Background1">
             <h1 style="font-size: 30px; margin-top: 0px; text-align: center;">
-                Update User Details
+                Update Contact Details
             </h1>
             <div class="editor-field">
                 <%: Html.HiddenFor(model => model.Uid)%>
@@ -261,12 +255,13 @@
             </div>
             <div id="Div-Form">
                 <div class="Div-TextBox">
+                    
                     <%: Html.TextBoxFor(model => model.Name, new { @class = "TextBox" })%>
                     <label id="nameLabel" class="ErrorLabel">
                         &nbsp;</label>
                 </div>
                 <div class="Div-TextBox">
-                    <%: Html.TextBoxFor(model => model.Dob, new { @class = "TextBox" })%>
+                    <%: Html.TextBoxFor(model => model.Dob, new { @class = "TextBox",@Value =Model.Dob.ToString("MM/dd/yyyy") })%>
                     <label id="dobLabel" class="ErrorLabel">
                         &nbsp;</label>
                 </div>

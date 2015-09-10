@@ -1,36 +1,49 @@
-﻿<%@ Page Language="C#" MasterPageFile="~/Shared/LoginRegisterMaster.Master" Inherits="System.Web.Mvc.ViewPage<UserApplication.Models.LoginModel>" %>
+﻿<%@ Page Language="C#" MasterPageFile="~/Shared/LoginRegisterMaster.Master" Inherits="System.Web.Mvc.ViewPage<UserApplication.Models.RegisterModel>" %>
 
 <asp:Content ID="Content1" ContentPlaceHolderID="TitleContent" runat="Server">
-    Login
+    Retrieve Password
 </asp:Content>
 <asp:Content ID="Content3" ContentPlaceHolderID="MainContent" runat="Server">
+    <script type="text/javascript">
+        $(document).ready(function () {
+            $("#EmailId").val('');
+            $("#UserName").val('');
+        });
+    </script>
     <script language="javascript" type="text/javascript">
-        var userNameLabel; passwordLabel;
+        var userNameLabel; emailIdLabel;
         function init() {
             userNameLabel = document.getElementById('userNameLabel');
-            passwordLabel = document.getElementById('passwordLabel');
+            emailIdLabel = document.getElementById('emailIdLabel');
         }
         function ClearValidation() {
             userNameLabel.innerHTML = "&nbsp;";
-            passwordLabel.innerHTML = "&nbsp;";
+            emailIdLabel.innerHTML = "&nbsp;";
             return true;
         }
         function Validate() {
             ClearValidation();
             var flag = true;
             var userName = document.getElementById('UserName');
-            var password = document.getElementById('Password');
+            var emailId = document.getElementById('EmailId');
 
             if (userName.value == "") {
-                userNameLabel.innerHTML = "*Please enter a Username";
+                userNameLabel.innerHTML = "*Please enter your registered Username";
                 flag = false;
                 userName.focus();
                 return false;
             }
-            if (password.value == "") {
-                passwordLabel.innerHTML = "*Please enter a password";
+            if (emailId.value == "") {
+                emailIdLabel.innerHTML = "*Please enter your registered EmailId";
                 flag = false;
-                password.focus();
+                emailId.focus();
+                return false;
+            }
+            var emailPattern = "[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Za-z]{2,4}"
+            if ((emailId.value).match(emailPattern) == null) {
+                emailIdLabel.innerHTML = "*Please enter a valid email id";
+                flag = false;
+                emailId.focus();
                 return false;
             }
             return flag;
@@ -160,22 +173,8 @@
             margin-left:auto;
             margin-right:auto;
             width:300px;
-            padding-top:12px;
-            display: inline-block;
-        }
-        #Div-Register
-        {
-            float:right;
-            text-align:right;
-            margin:0px;
-            padding:0px;
-        }
-        #Div-Retrieve
-        {
-            margin:0px;
-            float:left;
-            text-align:left;
-            padding:0px;
+            padding-top:10px;
+            text-align: right;
         }
         .ChangeViewButton
         {
@@ -206,25 +205,23 @@
                         &nbsp;</label>
                 </div>
                 <div class="Div-TextBox">
-                    <%: Html.PasswordFor(model => model.Password, new { @class = "TextBox", @PlaceHolder = "Password*" })%>
-                    <label id="passwordLabel" class="ErrorLabel">
+                    <%: Html.TextBoxFor(model => model.EmailId, new { @class = "TextBox", @PlaceHolder = "Email Id*" })%>
+                    <label id="emailIdLabel" class="ErrorLabel">
                         <%: ViewBag.ErrorMessage as string%>&nbsp;</label>
                 </div>
             </div>
             <div id="Div-SubmitButton">
                 <button id="SubmitButton" onclick="return Validate()" type="submit">
-                    Login</button>
+                    Retrieve Password</button>
             </div>
             <div id="Div-Footer">
-                <div id="Div-Register">
-                    <%: Html.ActionLink("Register", "Register","Home",   
+                <%: Html.ActionLink("Login", "Login","Home",   
                     null, //   Route args if needed; null if not.
-                    new { @class="ChangeViewButton"})%></div>
-                <div id="Div-Retrieve">
-                    <%: Html.ActionLink("Forgot Password", "ForgotPassword", "Home",   
-                    null, //   Route args if needed; null if not.
-                    new { @class="ChangeViewButton"})%></div>
+                    new { @class="ChangeViewButton"})%>
             </div>
+        </div>
+        <div id="Password">
+            <asp:Label ID="passwordLabel" runat="server" Text="Label"><%: ViewBag.Password as string%>&nbsp;</asp:Label>
         </div>
     </div>
     <% } %>

@@ -82,5 +82,44 @@ namespace DataAccessLayer
                 }
             }
         }
+
+        public static DataObject.RegisterDataObject RetrievePassword(DataObject.RegisterDataObject userData)
+        {
+            MySqlConnection Connection = new MySqlConnection(ConnString);
+            try
+            {
+                Connection.Open();
+                DataObject.RegisterDataObject Password = new DataObject.RegisterDataObject();
+                MySqlCommand RetrieveCommand = new MySqlCommand("udsp_account_retrieve", Connection);
+                RetrieveCommand.CommandType = CommandType.StoredProcedure;
+                Guid GuidId = Guid.NewGuid();
+                RetrieveCommand.Parameters.AddWithValue("var_Username", userData.UserName);
+                RetrieveCommand.Parameters.AddWithValue("var_EmailId", userData.EmailId);
+                MySqlDataReader Reader = RetrieveCommand.ExecuteReader();
+
+                while (Reader.Read())
+                {
+                    Password.AutoId = string.Empty;
+                    Password.Guid = string.Empty;
+                    Password.UserName = string.Empty;
+                    Password.Password = Reader["Password"].ToString();
+                    Password.FullName = string.Empty;
+                    Password.EmailId = string.Empty;
+                }
+                return Password;
+
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+            finally
+            {
+                if (Connection.State == ConnectionState.Open)
+                {
+                    Connection.Close();
+                }
+            }
+        }
     }
 }

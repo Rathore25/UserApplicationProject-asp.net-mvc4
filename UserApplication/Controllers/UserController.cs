@@ -28,6 +28,7 @@ namespace UserApplication.Controllers
         }
 
         [HttpPost]
+        [ValidateInput(false)]
         public ActionResult Create(UserModel model)
         {
             _log.Debug("Create Entered");
@@ -123,7 +124,7 @@ namespace UserApplication.Controllers
 
                 if (UserDataResponse!=null)
                 {
-                    Model = JsonConvert.DeserializeObject<UserModel>(UserDataResponse["RetrieveUserResult"].ToString()); 
+                    Model = JsonConvert.DeserializeObject<UserModel>(UserDataResponse["RetrieveUserResult"].ToString());
                 }
             }
             catch (Exception ex)
@@ -139,6 +140,7 @@ namespace UserApplication.Controllers
         }
 
         [HttpPost]
+        [ValidateInput(false)]
         public ActionResult Edit(UserModel model)
         {
             _log.Debug("Edit Entered : HttpPost");
